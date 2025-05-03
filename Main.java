@@ -22,6 +22,7 @@ public class Main {
 
         System.out.print("Enter the attractions (comma-separated): ");
         String[] attractionNames = scanner.nextLine().split(",");
+        scanner.close();
 
         List<String> selectedAttractions = new ArrayList<>();
         for (String name : attractionNames) {
@@ -29,44 +30,15 @@ public class Main {
         }
 
         // To Calculated Path
-        List<String> fullPath = calculateRoute(startCity, endCity, selectedAttractions, roadNetwork, attractions);
+        calcOrderedRoute caseOrdered = new calcOrderedRoute();
+        List<String> caseOrderedPath = caseOrdered.calculateRoute(startCity, endCity, selectedAttractions, roadNetwork, attractions);
+        // List<String> fullPath = calculateRoute(startCity, endCity, selectedAttractions, roadNetwork, attractions);
 
         // Output result
         System.out.println("The shortest route: ");
-        for (String city : fullPath) {
+        for (String city : caseOrderedPath) {
             System.out.print(city + " -> ");
         }
-        System.out.println("Total distance: " + calculateTotalDistance(fullPath, roadNetwork) + " miles");
-    }
-
-    // Calculate the path (including passing through scenic spots)
-    public static List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String, String> attractionLocations) {
-        List<String> fullPath = new ArrayList<>();
-        String currentCity = startingCity;
-
-        // Calculate the shortest path from the starting point to each attraction
-        for (String attraction : attractions) {
-            String attractionLocation = attractionLocations.get(attraction);  // Obtain the location of tourist attractions
-            List<String> path = graph.dijkstra(currentCity, attractionLocation);
-            fullPath.addAll(path.subList(1, path.size())); // Avoid duplicate cities
-            currentCity = attractionLocation;
-        }
-
-        // Finally, from the last attraction to the finish line
-        List<String> lastPath = graph.dijkstra(currentCity, endingCity);
-        fullPath.addAll(lastPath.subList(1, lastPath.size()));
-
-        return fullPath;
-    }
-
-    // Calculate the total distance of the path
-    public static int calculateTotalDistance(List<String> path, Graph graph) {
-        int totalDistance = 0;
-        for (int i = 0; i < path.size() - 1; i++) {
-            String city1 = path.get(i);
-            String city2 = path.get(i + 1);
-            totalDistance += graph.adjList.get(city1).get(city2);
-        }
-        return totalDistance;
+        System.out.println("Total distance: " + caseOrdered.calculateTotalDistance(caseOrderedPath, roadNetwork) + " miles");
     }
 }
