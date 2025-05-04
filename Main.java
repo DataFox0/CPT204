@@ -29,7 +29,7 @@ public class Main {
             selectedAttractions.add(name.trim());
         }
 
-        // To Calculated Path
+        // To Calculated Ordered Path
         calcOrderedRoute caseOrdered = new calcOrderedRoute();
         List<String> caseOrderedPath = caseOrdered.calculateRoute(startCity, endCity, selectedAttractions, roadNetwork, attractions);
         // List<String> fullPath = calculateRoute(startCity, endCity, selectedAttractions, roadNetwork, attractions);
@@ -39,6 +39,19 @@ public class Main {
         for (String city : caseOrderedPath) {
             System.out.print(city + " -> ");
         }
-        System.out.println("Total distance: " + caseOrdered.calculateTotalDistance(caseOrderedPath, roadNetwork) + " miles");
+        System.out.println("Total distance: " + roadNetwork.calculateTotalDistance(caseOrderedPath, roadNetwork) + " miles");
+        
+
+        // To Calculated Ordered Path
+        calcBitmaskDP caseDP = new calcBitmaskDP();
+        List<String> caseDPPath = caseDP.calculateRoute(startCity, endCity, selectedAttractions, roadNetwork, attractions);
+        // List<String> fullPath = calculateRoute(startCity, endCity, selectedAttractions, roadNetwork, attractions);
+
+        // Output result
+        System.out.println("The shortest route: ");
+        for (String city : caseDPPath) {
+            System.out.print(city + " -> ");
+        }
+        System.out.println("Total distance: " + roadNetwork.calculateTotalDistance(caseDPPath, roadNetwork) + " miles");
     }
 }

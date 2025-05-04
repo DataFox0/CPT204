@@ -120,10 +120,10 @@ public class SortingBenchmark {
 
     public static void main(String[] args) {
         String[] datasets = {
-                "1000places_sorted.csv",
-                "1000places_random.csv",
-                "10000places_sorted.csv",
-                "10000places_random.csv"
+                "CW3_Data_Files/1000places_sorted.csv",
+                "CW3_Data_Files/1000places_random.csv",
+                "CW3_Data_Files/10000places_sorted.csv",
+                "CW3_Data_Files/10000places_random.csv"
         };
 
         String[] algorithms = {"Insertion", "Quick", "Merge"};

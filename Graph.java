@@ -55,4 +55,15 @@ public class Graph {
         Collections.reverse(path);
         return path;
     }
+
+    // Calculate the total distance of the path
+    public int calculateTotalDistance(List<String> path, Graph graph) {
+        int totalDistance = 0;
+        for (int i = 0; i < path.size() - 1; i++) {
+            String city1 = path.get(i);
+            String city2 = path.get(i + 1);
+            totalDistance += graph.adjList.get(city1).get(city2);
+        }
+        return totalDistance;
+    }
 }
