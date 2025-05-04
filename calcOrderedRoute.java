@@ -6,6 +6,7 @@ public class calcOrderedRoute {
     // Calculate the path (including passing through scenic spots)
     public List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String, String> attractionLocations) {
         List<String> fullPath = new ArrayList<>();
+        fullPath.add(startingCity);
         String currentCity = startingCity;
 
         // Calculate the shortest path from the starting point to each attraction
