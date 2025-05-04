@@ -1,3 +1,15 @@
+/**
+ * File Purpose: Models a city road network as undirected weighted graph
+ *
+ * Core Functionality:
+ * - Stores city connections using adjacency lists
+ * - Implements Dijkstra's shortest path algorithm
+ * - Calculates total distance for given path
+ *
+ * Usage Example:
+ * 1. Add edges with addEdge(city1, city2, distance)
+ * 2. Find paths with dijkstra(startCity, endCity)
+ */
 import java.util.*;
 
 public class Graph {

@@ -1,3 +1,11 @@
+/**
+* File Purpose: Solves tourist route via brute-force permutation
+*
+* Algorithm:
+* - Checks all possible attraction visit orders
+* - Validates against road network
+* - Time Complexity: O(n!)
+*/
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,12 +15,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class calcBrute {
-    public List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String, String> attractionLocations) {
+    public List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String,Attraction> attractionLocations) {
         Set<String> allCityNames = new HashSet<>();
         allCityNames.add(startingCity);
         allCityNames.add(endingCity);
         for (String attraction : attractions) {
-            allCityNames.add(attractionLocations.get(attraction));
+            allCityNames.add(attractionLocations.get(attraction).getLocation());
         }
         allCityNames.addAll(graph.adjList.keySet());
 
@@ -42,7 +50,7 @@ public class calcBrute {
 
         List<String> requiredLocations = new ArrayList<>();
         for (String attr : attractions) {
-            requiredLocations.add(attractionLocations.get(attr));
+            requiredLocations.add(attractionLocations.get(attr).getLocation());
         }
 
         List<String> bestPath = null;

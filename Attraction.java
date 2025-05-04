@@ -1,3 +1,6 @@
+/**
+ * File Purpose: Represents a tourist attraction with its location
+ */
 public class Attraction {
     private String name;
     private String location;

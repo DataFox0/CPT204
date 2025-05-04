@@ -4,11 +4,11 @@ public class InputData {
     public String startCity;
     public String endCity;
     public List<String> selectedAttractions;
-    public Map<String, String> attractions;
+    public Map<String, Attraction> attractions;
     public Graph roadNetwork;
 
     public InputData(String startCity, String endCity, List<String> selectedAttractions,
-                     Map<String, String> attractions, Graph roadNetwork) {
+                     Map<String, Attraction> attractions, Graph roadNetwork) {
         this.startCity = startCity;
         this.endCity = endCity;
         this.selectedAttractions = selectedAttractions;

@@ -1,3 +1,16 @@
+/**
+* File Purpose: Solves tourist route planning using DP with bitmask
+*
+* Algorithm:
+* - Bitmask DP solution for TSP variant
+* - Time Complexity: O(2^n * n^2)
+*
+* Input Requirements:
+* - Valid city names in Graph
+* - Existing attractions in location map
+*
+* Output: Ordered list of cities to visit
+*/
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,12 +21,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class calcBitmaskDP {
-    public List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String, String> attractionLocations) {
+    public List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String, Attraction> attractionLocations) {
         Set<String> allCityNames = new HashSet<>();
         allCityNames.add(startingCity);
         allCityNames.add(endingCity);
         for (String attraction : attractions) {
-            allCityNames.add(attractionLocations.get(attraction));
+            allCityNames.add(attractionLocations.get(attraction).getLocation());
+
         }
         allCityNames.addAll(graph.adjList.keySet());
 
@@ -31,7 +45,7 @@ public class calcBitmaskDP {
         int[] requiredIdx = new int[k];
         for (int i = 0; i < k; i++) {
             String attraction = attractions.get(i);
-            String location = attractionLocations.get(attraction);
+            String location = attractionLocations.get(attraction).getLocation();
             requiredIdx[i] = cityToIndex.get(location);
         }
 

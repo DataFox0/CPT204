@@ -1,3 +1,15 @@
+/**
+* File Purpose: Sorting Algorithm Performance Comparator
+*
+* Program Flow:
+* 1. Loads location data from CSV files
+* 2. Benchmarks Insertion, Quick and Merge sorts
+* 3. Measures execution time (with warm-up runs)
+*
+* Output Format:
+* - Sorting times in ns/ms for each algorithm
+* - Performance comparison across datasets
+*/
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -5,6 +17,7 @@ import java.util.*;
 
 public class SortingBenchmark {
 
+    //insertion sort
     public static void insertionSort(List<String> list) {
         for (int i = 1; i < list.size(); i++) {
             String key = list.get(i);
@@ -17,6 +30,7 @@ public class SortingBenchmark {
         }
     }
 
+    //quick sort
     public static void quickSort(List<String> list) {
         quickSort(list, 0, list.size() - 1);
     }
@@ -47,6 +61,7 @@ public class SortingBenchmark {
     }
 
 
+    //merge sort
     public static void mergeSort(List<String> list) {
         if (list.size() > 1) {
             int mid = list.size() / 2;
@@ -91,6 +106,7 @@ public class SortingBenchmark {
     }
 
     public static long testSortingAlgorithm(List<String> data, String algorithm) {
+        //warm-up
         for (int i = 0; i < 20; i++) {
             List<String> warmupCopy = new ArrayList<>(data);
             switch (algorithm) {
@@ -115,7 +131,6 @@ public class SortingBenchmark {
         Arrays.sort(times);
         return times[2];
     }
-
 
 
     public static void main(String[] args) {

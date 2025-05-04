@@ -4,6 +4,10 @@ public class Main {
     public static void main(String[] args) {
         InputData input = InputHandler.readInput();
 
+        //System.out.println("start: " + startCity);
+        //System.out.println("Destination: " + endCity);
+        //System.out.println("Attractions: " + Arrays.toString(attractionNames));
+
         calcOrderedRoute caseOrdered = new calcOrderedRoute();
         List<String> caseOrderedPath = caseOrdered.calculateRoute(
                 input.startCity, input.endCity, input.selectedAttractions, input.roadNetwork, input.attractions
@@ -23,3 +27,4 @@ public class Main {
         RoutePrinter.printRoute("Shortest route (Brute Force):", caseBrutePath, input.roadNetwork);
     }
 }
+

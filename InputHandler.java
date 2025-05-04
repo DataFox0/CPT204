@@ -2,17 +2,17 @@ import java.util.*;
 
 public class InputHandler {
     public static InputData readInput() {
-        // 读取景点和道路数据
-        Map<String, String> attractions = CSVReader.readAttractions("CW3_Data_Files/attractions.csv");
+        // Read attractions and road data
+        Map<String, Attraction> attractions = CSVReader.readAttractions("CW3_Data_Files/attractions.csv");
         Graph roadNetwork = CSVReader.readRoads("CW3_Data_Files/roads.csv");
 
-        // 打印景点信息
+        // Print the information of attraction
         System.out.println("Attractions:");
-        for (Map.Entry<String, String> entry : attractions.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        for (Map.Entry<String, Attraction> entry : attractions.entrySet()) {
+            System.out.println( entry.getValue());
         }
 
-        // 读取用户输入
+        // Read user input
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the starting city: ");
         String startCity = scanner.nextLine();

@@ -1,20 +1,28 @@
+/**
+ * File Purpose: Loads tourism data from CSV files
+ *
+ * Static Methods:
+ * - readAttractions(): Parses attraction locations
+ * - readRoads(): Builds city road network
+ *
+ * Note: Throws IOException for file operations
+ */
 import java.io.*;
 import java.util.*;
 
 public class CSVReader {
 
-    // More mapping of attractions and cities should be added here
-    public static Map<String, String> readAttractions(String filename) {
-        Map<String, String> attractions = new HashMap<>();
+    public static Map<String, Attraction> readAttractions(String filename) {
+        Map<String, Attraction> attractions = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
-            br.readLine();  // Skip title line
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length == 2) {
                     String name = values[0].trim();
                     String location = values[1].trim();
-                    attractions.put(name, location);  // Store attraction names and corresponding cities
+                    attractions.put(name, new Attraction(name, location));
                 }
             }
         } catch (IOException e) {
@@ -23,17 +31,13 @@ public class CSVReader {
         return attractions;
     }
 
-    // Obtain the city location based on the name of the scenic spot
-    public static String getAttractionLocation(String attraction, Map<String, String> attractions) {
-        return attractions.get(attraction);  // Obtain the city corresponding to the name of the scenic spot
-    }
 
     // Read the roads.csv file and return the graph structure (roads and distances between cities)
     public static Graph readRoads(String filename) {
         Graph graph = new Graph();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
-            br.readLine();  // Skip title line
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length == 3) {
