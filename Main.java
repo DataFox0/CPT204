@@ -53,5 +53,17 @@ public class Main {
             System.out.print(city + " -> ");
         }
         System.out.println("Total distance: " + roadNetwork.calculateTotalDistance(caseDPPath, roadNetwork) + " miles");
+
+        // To Calculated Ordered Path
+        calcBrute caseBrute = new calcBrute();
+        List<String> caseBrutePath = caseBrute.calculateRoute(startCity, endCity, selectedAttractions, roadNetwork, attractions);
+        // List<String> fullPath = calculateRoute(startCity, endCity, selectedAttractions, roadNetwork, attractions);
+
+        // Output result
+        System.out.println("The shortest route: ");
+        for (String city : caseBrutePath) {
+            System.out.print(city + " -> ");
+        }
+        System.out.println("Total distance: " + roadNetwork.calculateTotalDistance(caseBrutePath, roadNetwork) + " miles");
     }
 }
