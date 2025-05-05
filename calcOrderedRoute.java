@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class calcOrderedRoute {
+public class CalcOrderedRoute {
     // Calculate the path (including passing through scenic spots)
     public List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String, Attraction> attractionLocations) {
         long start = System.nanoTime();

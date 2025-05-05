@@ -1,46 +1,127 @@
 import subprocess
-import re
+import random
 import time
+import re
+import os
 
-# 准备执行 Java 程序的命令
-command = ["java", "Main"]  # 假设你已经编译了 Main.java 并生成了 Main.class
+# Fixed list of cities
+cities = [
+    "New York NY", "Los Angeles CA", "Chicago IL", "Houston TX", "Phoenix AZ",
+    "Philadelphia PA", "San Antonio TX", "San Diego CA", "Dallas TX", "San Jose CA",
+    "Austin TX", "Jacksonville FL", "Fort Worth TX", "Columbus OH", "Charlotte NC"
+]
 
-# 使用 subprocess 运行 Java 程序并捕获输出
-try:
-    while True:  # 循环进行对比，直到手动停止
-        # 运行 Java 程序并捕获输出
-        result = subprocess.run(command, capture_output=True, text=True, check=True)
+# Fixed list of scenic spot names
+attractions = [
+    "Statue of Liberty", "Hollywood Sign", "Millennium Park", "NASA Space Center", "Desert Botanical Garden",
+    "Liberty Bell", "The Alamo", "Balboa Park", "The Sixth Floor Museum", "Winchester Mystery House",
+    "Texas State Capitol", "Jacksonville Zoo and Gardens", "Fort Worth Stockyards", "COSI", "NASCAR Hall of Fame"
+]
 
-        # 获取 Java 程序的标准输出（即路径信息）
-        java_output = result.stdout
-        print("Java Output:")
-        print(java_output)
+# Generate random starting, ending, and passing nodes (make sure to select 10 scenic spots)
+def generate_input_data():
+    # Randomly select the starting and ending points
+    start_city = random.choice(cities)
+    end_city = random.choice(cities)
+    
+    # Randomly select 10 passing scenic spots
+    selected_attractions = random.sample(attractions, 10)
+    
+    # Format attraction data as "Attraction1, Attraction2" line breaks
+    formatted_attractions = ', '.join(selected_attractions)
+    
+    # Return the starting point, endpoint, and formatted passing nodes
+    return start_city, end_city, formatted_attractions
 
-        # 提取 Java 程序输出中的 Total Distance
-        dp_distance = None
-        brute_distance = None
-        
-        # 使用正则表达式查找 Total Distance for Bitmask DP and Brute Force
-        dp_match = re.search(r"Shortest route \(Bitmask DP\):.*Total distance:\s*(\d+) miles", java_output)
-        brute_match = re.search(r"Shortest route \(Brute Force\):.*Total distance:\s*(\d+) miles", java_output)
-        
-        if dp_match:
-            dp_distance = int(dp_match.group(1))  # 获取 Bitmask DP 的距离
-        if brute_match:
-            brute_distance = int(brute_match.group(1))  # 获取 Brute Force 的距离
+# Run Java program and obtain output
+def run_java_program(start_city, end_city, formatted_attractions):
+    # Prepare Java commands
+    command = ["java", "Main"]
+    
+    # Prepare data: Transfer the starting point, ending point, and passing nodes according to the input format of the console
+    input_data = f"{start_city}\n{end_city}\n{formatted_attractions}\n"
+    
+    # Use subprocess to run Java program and pass formatted.attactions data to Java program
+    result = subprocess.run(command, input=input_data, capture_output=True, text=True, check=True)
+    return result.stdout
 
-        # 打印提取的距离
-        print(f"Bitmask DP Route Distance: {dp_distance} miles")
-        print(f"Brute Force Route Distance: {brute_distance} miles")
+# Analyze the output of Java programs
+def parse_java_output(java_output):
+    # Regular expressions search for all numbers: floating-point numbers (runtime) and integers (total distance)
+    pattern = r"(\d+\.\d+)|(\d+)(?=\s*miles)"  # Match floating-point numbers or integers, with integers followed by 'miles'
+    numbers = re.findall(pattern, java_output)
 
-        # 比较两个路径的总距离
-        if dp_distance == brute_distance:
-            print("The distances match!")
-        else:
-            print("The distances do not match!")
+    # Extract floating-point numbers and integers: time is a floating-point number, distance is an integer
+    times_and_distances = []
+    for match in numbers:
+        if match[0]:
+            times_and_distances.append(float(match[0]))
+        elif match[1]:
+            times_and_distances.append(int(match[1]))
+    
+    return times_and_distances
 
-        # 延时1秒后继续下一轮对比
-        time.sleep(1)
+# Store runtime and results to a file
+def store_results(times_and_distances):
+    # Create result folder (if it doesn't exist)
+    os.makedirs('result', exist_ok=True)
+    
+    # Store the running time and distance to the file in the result folder
+    with open('result/runtime_results.txt', 'a') as runtime_file:
+        runtime_file.write(f"Order Algorithm Time: {times_and_distances[0]} seconds\n")
+        runtime_file.write(f"Brute Force Time: {times_and_distances[2]} seconds\n")
+        runtime_file.write(f"DP Algorithm Time: {times_and_distances[4]} seconds\n")
+        runtime_file.write(f"MST Algorithm Time: {times_and_distances[6]} seconds\n")
 
-except KeyboardInterrupt:
-    print("\nComparison stopped manually by user.")
+    with open('result/distance_results.txt', 'a') as distance_file:
+        distance_file.write(f"Order Algorithm Distance: {times_and_distances[1]} miles\n")
+        distance_file.write(f"Brute Force Distance: {times_and_distances[3]} miles\n")
+        distance_file.write(f"DP Algorithm Distance: {times_and_distances[5]} miles\n")
+        distance_file.write(f"MST Algorithm Distance: {times_and_distances[7]} miles\n")
+
+# Store inconsistent test data and output
+def store_inconsistent_results(start_city, end_city, formatted_attractions, java_output):
+    
+    os.makedirs('result/inconsistent_tests', exist_ok=True)
+    
+    with open('result/inconsistent_tests/inconsistent_test.txt', 'a') as file:
+        file.write(f"Start City: {start_city}\n")
+        file.write(f"End City: {end_city}\n")
+        file.write(f"Attractions: {formatted_attractions}\n")
+        file.write(f"Java Output:\n{java_output}\n")
+        file.write("------\n")
+
+
+def main():
+    try:
+        while True:
+            start_city, end_city, formatted_attractions = generate_input_data()
+            print(f"Start City: {start_city}")
+            print(f"End City: {end_city}")
+            print(f"Formatted Attractions: {formatted_attractions}")
+
+
+            java_output = run_java_program(start_city, end_city, formatted_attractions)
+            print("Java Output:")
+            print(java_output)
+
+
+            times_and_distances = parse_java_output(java_output)
+            print(f"Times and Distances: {times_and_distances}")
+
+
+            if times_and_distances[3] != times_and_distances[5]:
+                print("Inconsistent results found. Storing data...")
+                store_inconsistent_results(start_city, end_city, formatted_attractions, java_output)
+
+
+            store_results(times_and_distances)
+            
+
+            time.sleep(1)
+
+    except KeyboardInterrupt:
+        print("\nComparison stopped manually by user.")
+
+if __name__ == "__main__":
+    main()

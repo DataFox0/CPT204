@@ -14,25 +14,25 @@ public class Main {
                 return;
         }
 
-        calcOrderedRoute caseOrdered = new calcOrderedRoute();
+        CalcOrderedRoute caseOrdered = new CalcOrderedRoute();
         List<String> caseOrderedPath = caseOrdered.calculateRoute(
                 input.startCity, input.endCity, input.selectedAttractions, input.roadNetwork, input.attractions
         );
         RoutePrinter.printRoute("Shortest route (Ordered Calculation):", caseOrderedPath, input.roadNetwork);
 
-        calcBrute caseBrute = new calcBrute();
+        CalcBrute caseBrute = new CalcBrute();
         List<String> caseBrutePath = caseBrute.calculateRoute(
                 input.startCity, input.endCity, input.selectedAttractions, input.roadNetwork, input.attractions
         );
         RoutePrinter.printRoute("Shortest route (Brute Force):", caseBrutePath, input.roadNetwork);
 
-        calcBitmaskDP caseDP = new calcBitmaskDP();
+        CalcBitmaskDP caseDP = new CalcBitmaskDP();
         List<String> caseDPPath = caseDP.calculateRoute(
                 input.startCity, input.endCity, input.selectedAttractions, input.roadNetwork, input.attractions
         );
         RoutePrinter.printRoute("Shortest route (Bitmask DP):", caseDPPath, input.roadNetwork);
 
-        calcMST caseMST = new calcMST();
+        CalcMST caseMST = new CalcMST();
         List<String> caseMSTPath = caseMST.calculateRoute(
                 input.startCity, input.endCity, input.selectedAttractions, input.roadNetwork, input.attractions
         );
