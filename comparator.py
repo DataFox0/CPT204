@@ -68,10 +68,10 @@ def store_results(times_and_distances):
     
     # Store the running time and distance to the file in the result folder
     with open('result/runtime_results.txt', 'a') as runtime_file:
-        runtime_file.write(f"Order Algorithm Time: {times_and_distances[0]} seconds\n")
-        runtime_file.write(f"Brute Force Time: {times_and_distances[2]} seconds\n")
-        runtime_file.write(f"DP Algorithm Time: {times_and_distances[4]} seconds\n")
-        runtime_file.write(f"MST Algorithm Time: {times_and_distances[6]} seconds\n")
+        runtime_file.write(f"Order Algorithm Time: {times_and_distances[0]} ms\n")
+        runtime_file.write(f"Brute Force Time: {times_and_distances[2]} ms\n")
+        runtime_file.write(f"DP Algorithm Time: {times_and_distances[4]} ms\n")
+        runtime_file.write(f"MST Algorithm Time: {times_and_distances[6]} ms\n")
 
     with open('result/distance_results.txt', 'a') as distance_file:
         distance_file.write(f"Order Algorithm Distance: {times_and_distances[1]} miles\n")
