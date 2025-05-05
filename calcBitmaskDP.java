@@ -22,6 +22,8 @@ import java.util.Set;
 
 public class calcBitmaskDP {
     public List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String, Attraction> attractionLocations) {
+        long startTime = System.nanoTime();
+
         Set<String> allCityNames = new HashSet<>();
         allCityNames.add(startingCity);
         allCityNames.add(endingCity);
@@ -150,6 +152,8 @@ public class calcBitmaskDP {
             if (i > 0) segment = segment.subList(1, segment.size());
             fullPath.addAll(segment);
         }
+
+        System.out.println((System.nanoTime()-startTime)/1e6);
 
         return fullPath;
     }

@@ -19,7 +19,11 @@ import java.util.Map;
 public class calcOrderedRoute {
     // Calculate the path (including passing through scenic spots)
     public List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String, Attraction> attractionLocations) {
+        long start = System.nanoTime();
+
+
         List<String> fullPath = new ArrayList<>();
+        fullPath.add(startingCity);
         String currentCity = startingCity;
 
         // Calculate the shortest path from the starting point to each attraction
@@ -33,6 +37,8 @@ public class calcOrderedRoute {
         // Finally, from the last attraction to the finish line
         List<String> lastPath = graph.dijkstra(currentCity, endingCity);
         fullPath.addAll(lastPath.subList(1, lastPath.size()));
+
+        System.out.println((System.nanoTime()-start)/1e6);
 
         return fullPath;
     }

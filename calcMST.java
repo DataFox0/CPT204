@@ -1,21 +1,8 @@
-/**
-* File Purpose: Solves tourist route via brute-force permutation
-*
-* Algorithm:
-* - Checks all possible attraction visit orders
-* - Validates against road network
-* - Time Complexity: O(n!)
-*/
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class calcBrute {
-    public List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String,Attraction> attractionLocations) {
+public class calcMST {
+
+    public List<String> calculateRoute(String startingCity, String endingCity, List<String> attractions, Graph graph, Map<String, Attraction> attractionLocations) {
         long startTime = System.nanoTime();
 
         Set<String> allCityNames = new HashSet<>();
@@ -114,4 +101,4 @@ public class calcBrute {
             Collections.swap(items, i, start);
         }
     }
-}
+} 
